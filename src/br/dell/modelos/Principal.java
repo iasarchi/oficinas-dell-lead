@@ -12,35 +12,56 @@ public class Principal {
         Scanner scanner = new Scanner(System.in);
         Hospede hospede = new Hospede();
 
-
-
-        String cpfHospede = showInputDialog("Informe o CPF do hospede");
-        String rgHospede = showInputDialog("Informe o RG do hospede");
-        String nomeHospede = showInputDialog("Informe o nome do hospede");
+        long cpfHospede = 0;
+        long rgHospede = 0;
         int idadeHospede = 0;
+        String enderecoHospede = "";
+        String nomeHospede = "";
+        int numeroDoQuarto = 0;
+
         try {
+            System.out.println("Informe o CPF do hospede");
+            cpfHospede = scanner.nextLong();
+
+        } catch (InputMismatchException exception) {
+            System.err.println("Erro: Digite o numero de CPF");
+        }
+        System.out.println("Informe o RG do hospede");
+        rgHospede = scanner.nextLong();
+
+
+
+        try {
+            System.out.println("Digite a idade do hospede");
          idadeHospede = scanner.nextInt();
 
         } catch (InputMismatchException exception) {
-            throw new Exception("Erro");
+            System.err.println("Erro: digite um numero");
         }
         scanner.nextLine();
-        String enderecoHospede = showInputDialog("Informe o endereço do hospede");
-        String numeroDoQuarto = showInputDialog("Informe o numero do quarto");
-        Quarto quarto = new Quarto(Integer.parseInt(numeroDoQuarto), hospede);
+        System.out.println("Digite o endereço do hospede");
+        enderecoHospede = scanner.nextLine();
+
+        System.out.println("Informe o nome do hospede");
+        nomeHospede = scanner.nextLine();
+
+        System.out.println("Digite o numero do quarto");
+        numeroDoQuarto = scanner.nextInt();
+
+        Quarto quarto = new Quarto(numeroDoQuarto, hospede);
 
         hospede.setNome(nomeHospede);
-        hospede.setCPF(Long.parseLong(cpfHospede));
-        hospede.setRG(Long.parseLong(rgHospede));
+        hospede.setCPF(cpfHospede);
+        hospede.setRG(rgHospede);
 
         hospede.setIdade(idadeHospede);
 
         hospede.setEndereço(enderecoHospede);
 
 
-        JOptionPane.showMessageDialog(null, "Hospede cadastrado com sucesso");
+        System.out.println("Hospede cadastrado com sucesso");
 
-        JOptionPane.showMessageDialog(null, "O numero do quarto é " + quarto.getNumero() + quarto.getHospede().toString());
+        System.out.println("O numero do quarto é " + quarto.getNumero() + " " + quarto.getHospede().toString());
 
     }
 }
