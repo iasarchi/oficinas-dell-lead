@@ -51,6 +51,7 @@ Etapa 5
 Exiba, através do método showMessageDialog(), os dados do hóspede e o número do seu quarto.
 Ao fim de todas as cinco etapas, você terá criado um programa que recebe como entrada as informações de um hóspede e
  o quarto em que ele ficará hospedado, exibindo essas informações para o usuário ao fim da execução.*/
+
 public class Hospede {
     private long CPF;
     private long RG;
@@ -106,7 +107,6 @@ public class Hospede {
         return endereço;
     }
 
-    @Override
     public String toString() {
         return "Hospede{" +
                 "CPF=" + CPF +
