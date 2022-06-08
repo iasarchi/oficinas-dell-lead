@@ -1,9 +1,8 @@
 package br.dell.modelos;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static javax.swing.JOptionPane.showInputDialog;
+
 
 public class Principal {
     public static void main(String[] args) throws Exception {
@@ -17,29 +16,30 @@ public class Principal {
         String nomeHospede = "";
         int numeroDoQuarto = 0;
 
-        boolean validado = false;
-        while (!validado) {
+        boolean validaIdade = false;
+        boolean validadoCpf = false;
+        while (!validadoCpf) {
             try {
                 System.out.println("Informe o CPF do hospede");
                 cpfHospede = scanner.nextLong();
-
-                validado = true;
+                validadoCpf = true;
             } catch (InputMismatchException exception) {
                 System.err.println("Erro: Digite o numero de CPF");
-            }
+            }scanner.nextLine();
         }
-            scanner.nextLine();
             System.out.println("Informe o RG do hospede");
             rgHospede = scanner.nextLong();
+            while (!validaIdade) {
                 try {
                     System.out.println("Digite a idade do hospede");
                     idadeHospede = scanner.nextInt();
+                    validaIdade = true;
 
                 } catch (InputMismatchException exception) {
                     System.err.println("Erro: digite um numero");
-                }
+                }scanner.nextLine();
 
-            scanner.nextLine();
+            }
 
             System.out.println("Digite o endereço do hospede");
             enderecoHospede = scanner.nextLine();
@@ -62,16 +62,14 @@ public class Principal {
 
             System.out.println("Hospede cadastrado com sucesso");
 
-            System.out.println("O numero do quarto é " + quarto.getNumero() + " " + quarto.getHospede().toString());
+            System.out.println(" O numero do quarto é " + quarto.getNumero() + " " + quarto.getHospede().toString());
 
         validacao(nomeHospede);
         }
 
-    public static String validacao(String nomeHospede) {
-       String string = nomeHospede;
-        boolean validar = string.contains(".")||string.contains("/")||string.contains(".") || string.matches("[+-]?\\d*(\\.\\d+)?");
-        System.out.println(" O nome do hospede é válido? : " + validar);
-        return string;
+    public static boolean validacao(String nomeHospede) {
+        boolean validar = (nomeHospede.matches("\\[A-Z\\]\\[a-z\\]"));
+        System.out.println(" O nome de hospede (" +nomeHospede +") é válido? : " + validar);
+        return validar;
     }
-
 }
