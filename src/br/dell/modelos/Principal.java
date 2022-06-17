@@ -2,7 +2,6 @@ package br.dell.modelos;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Map;
 import java.util.Scanner;
 
 
@@ -48,16 +47,15 @@ public class Principal {
         System.out.println("Digite o endereço do hospede");
         enderecoHospede = scanner.nextLine();
 
-        Map<Integer, String> hospedeQuarto = new HashMap<Integer, String>();
+        HashMap<String, Integer> hospedeQuarto = new HashMap();
         System.out.println("Informe o nome do hospede");
         nomeHospede = scanner.nextLine();
+
+        validacao(nomeHospede);
+
         System.out.println("Digite o numero do quarto");
         numeroDoQuarto = scanner.nextInt();
-
-        hospedeQuarto.put(numeroDoQuarto,nomeHospede);
-
-
-        Quarto quarto = new Quarto(numeroDoQuarto, hospede);
+        scanner.nextLine();
 
         hospede.setNome(nomeHospede);
         hospede.setCPF(cpfHospede);
@@ -65,20 +63,23 @@ public class Principal {
         hospede.setIdade(idadeHospede);
         hospede.setEndereço(enderecoHospede);
 
+        Quarto quarto = new Quarto(numeroDoQuarto, hospede);
+
+        hospedeQuarto.put(hospede.getNome(),quarto.getNumero());
+
         System.out.println("Hospede cadastrado com sucesso");
 
         System.out.println(" O numero do quarto é " + quarto.getNumero() + " " + quarto.getHospede().toString());
 
         System.out.println("Digite o nome para busca: ");
-        String nomeBusca=scanner.nextLine();
-        String numeroQuartoBuscado = hospedeQuarto.get(nomeBusca);
-        System.out.println( " O numero do quarto do cliente "+nomeHospede +" é " + numeroDoQuarto);
+        String nomeBusca= scanner.nextLine();
+        Object numeroQuartoBuscado = hospedeQuarto.get(nomeBusca);
+        System.out.println( " O numero do quarto do cliente "+ nomeBusca +" é " + numeroQuartoBuscado);
 
-        validacao(nomeHospede);
     }
 
     public static boolean validacao(String nomeHospede) {
-        boolean validar = (nomeHospede.matches("\\[A-Z]\\[a-z]"));
+        boolean validar = nomeHospede.matches("[A-Z][a-z]*");
         System.out.println(" O nome de hospede (" +nomeHospede +") é válido? : " + validar);
         return validar;
     }
