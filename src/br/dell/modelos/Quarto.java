@@ -1,5 +1,9 @@
 package br.dell.modelos;
 
+/**
+ * @author Iasmim Cardoso
+ * @version 1
+ */
 public class Quarto {
     private int numero;
     private Hospede hospede;

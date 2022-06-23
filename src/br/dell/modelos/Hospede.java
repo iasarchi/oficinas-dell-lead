@@ -52,6 +52,10 @@ Exiba, através do método showMessageDialog(), os dados do hóspede e o número
 Ao fim de todas as cinco etapas, você terá criado um programa que recebe como entrada as informações de um hóspede e
  o quarto em que ele ficará hospedado, exibindo essas informações para o usuário ao fim da execução.*/
 
+/**
+ * @author Iasmim Cardoso
+ * @version 1
+ */
 public class Hospede {
     private long CPF;
     private long RG;

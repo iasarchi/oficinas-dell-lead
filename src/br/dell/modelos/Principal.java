@@ -4,8 +4,18 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
+/**
+ * Armazena e valida as informações do hospede.
+ * @author Iasmim Cardoso
+ * @version 3
+ */
 public class Principal {
+
+    /**
+     * Metodo com a funcao de gravar os valores dos hospedes e tratar as excecoes.
+     * @param args
+     * @throws Exception InputMismatchException Tipo de valor diferente do pedido.
+     */
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         Hospede hospede = new Hospede();
@@ -20,11 +30,15 @@ public class Principal {
         boolean validaIdade = false;
         boolean validadoCpf = false;
         while (!validadoCpf) {
+
             try {
+
                 System.out.println("Informe o CPF do hospede");
                 cpfHospede = scanner.nextLong();
                 validadoCpf = true;
-            } catch (InputMismatchException exception) {
+
+            }
+            catch (InputMismatchException exception) {
                 System.err.println("Erro: Digite o numero de CPF");
             }
             scanner.nextLine();
@@ -77,6 +91,12 @@ public class Principal {
         System.out.println( " O numero do quarto do cliente "+ nomeBusca +" é " + numeroQuartoBuscado);
 
     }
+
+    /**
+     * Retorna se o nome do hospede é válido ou não.
+     * @param nomeHospede
+     * @return true para um nome de hospede válido ou false para o nome de hospede inválido.
+     */
 
     public static boolean validacao(String nomeHospede) {
         boolean validar = nomeHospede.matches("[A-Z][a-z]*");
