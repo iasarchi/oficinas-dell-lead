@@ -13,7 +13,6 @@ public class Principal {
 
     /**
      * Metodo com a funcao de gravar os valores dos hospedes e tratar as excecoes.
-     * @param args
      * @throws Exception InputMismatchException Tipo de valor diferente do pedido.
      */
     public static void main(String[] args) throws Exception {
@@ -75,7 +74,7 @@ public class Principal {
         hospede.setCPF(cpfHospede);
         hospede.setRG(rgHospede);
         hospede.setIdade(idadeHospede);
-        hospede.setEndereço(enderecoHospede);
+        hospede.setEndereco(enderecoHospede);
 
         Quarto quarto = new Quarto(numeroDoQuarto, hospede);
 

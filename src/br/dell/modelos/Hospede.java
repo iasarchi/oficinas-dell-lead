@@ -61,17 +61,17 @@ public class Hospede {
     private long RG;
     private String nome;
     private int idade;
-    private String endereço;
+    private String endereco;
 
     public Hospede() {
     }
 
-    public Hospede(long CPF, long RG, String nome, int idade, String endereço) {
+    public Hospede(long CPF, long RG, String nome, int idade, String endereco) {
         this.CPF = CPF;
         this.RG = RG;
         this.nome = nome;
         this.idade = idade;
-        this.endereço = endereço;
+        this.endereco = endereco;
 
     }
 
@@ -107,8 +107,8 @@ public class Hospede {
         this.idade = idade;
     }
 
-    public String getEndereço() {
-        return endereço;
+    public String getEndereco() {
+        return endereco;
     }
 
     public String toString() {
@@ -117,12 +117,12 @@ public class Hospede {
                 ", RG=" + RG +
                 ", nome='" + nome + '\'' +
                 ", idade=" + idade +
-                ", endereço='" + endereço + '\'' +
+                ", endereço='" + endereco + '\'' +
                 '}';
     }
 
-    public void setEndereço(String endereço) {
-        this.endereço = endereço;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
 
     }
 }
