@@ -46,7 +46,7 @@ public class CadastroHospedes extends Application {
         layoutCpf.setBottom(textCpf);
 
         BorderPane layoutRg = new BorderPane();
-        Label labelRg = new Label("RG:");
+        Label labelRg = new Label("RG: ");
         TextField textRg = new TextField();
 
         layoutRg.setTop(labelRg);
