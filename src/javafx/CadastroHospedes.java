@@ -1,5 +1,8 @@
 package javafx;
+import br.dell.modelos.Hospede;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,8 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.util.HashMap;
+import java.util.Scanner;
+
 
 public class CadastroHospedes extends Application {
+   static HashMap hospedes = new HashMap<>();
     @Override
     public void start(Stage palco) throws Exception {
         VBox layoutRaiz = new VBox(10);
@@ -65,15 +73,15 @@ public class CadastroHospedes extends Application {
 
         layoutSexoBotoes.setAlignment(Pos.BOTTOM_LEFT);
 
-        layoutSexoBotoes.setPadding(new Insets(10,0,0,0));
+        layoutSexoBotoes.setPadding(new Insets(10, 0, 0, 0));
 
-        layoutSexoBotoes.getChildren().addAll(buttonSexoFeminino,buttonSexoMasculino);
+        layoutSexoBotoes.getChildren().addAll(buttonSexoFeminino, buttonSexoMasculino);
 
         layoutSexo.setBottom(layoutSexoBotoes);
 
         BorderPane layoutQuartos = new BorderPane();
         Label labelQuartos = new Label("Quartos:");
-        labelQuartos.setPadding(new Insets(0,0,10,0));
+        labelQuartos.setPadding(new Insets(0, 0, 10, 0));
         layoutQuartos.setTop(labelQuartos);
 
         ComboBox layoutQuartoCombo = new ComboBox();
@@ -91,7 +99,7 @@ public class CadastroHospedes extends Application {
         layoutCheckinBotoes.setAlignment(Pos.BOTTOM_LEFT);
 
 
-        layoutCheckinBotoes.getChildren().addAll(checkin,checkout);
+        layoutCheckinBotoes.getChildren().addAll(checkin, checkout);
 
         HBox layoutBotoes = new HBox(20);
         Button buttonSalvar = new Button("Salvar");
@@ -102,10 +110,17 @@ public class CadastroHospedes extends Application {
         layoutBotoes.setAlignment(Pos.BOTTOM_LEFT);
 
 
-        layoutBotoes.getChildren().addAll(buttonSalvar,buttonBuscar,buttonRemover);
+        layoutBotoes.getChildren().addAll(buttonSalvar, buttonBuscar, buttonRemover);
 
 
-        layoutRaiz.getChildren().addAll(layoutNome, layoutEndereco, layoutCpf,layoutRg,layoutIdade,layoutSexo,layoutQuartos,layoutCheckinBotoes,layoutBotoes);
+        layoutRaiz.getChildren().addAll(layoutNome, layoutEndereco, layoutCpf, layoutRg, layoutIdade, layoutSexo, layoutQuartos, layoutCheckinBotoes, layoutBotoes);
+
+        EventHandler<ActionEvent> eventoSalva = new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent evento){
+                salvar(textNome,textEndereco,textCpf,textRg,textIdade,buttonSexoFeminino,buttonSexoMasculino,checkin,checkout);
+            }
+        };
+        buttonSalvar.setOnAction(eventoSalva);
 
         Scene cena = new Scene(layoutRaiz, 350, 450);
         palco.setScene(cena);
@@ -115,7 +130,14 @@ public class CadastroHospedes extends Application {
 
     }
 
+
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void salvar(TextField textNome,TextField textEndereco, TextField textCpf, TextField textRg, TextField textIdade, RadioButton buttonSexoFeminino, RadioButton buttonSexoMasculino, CheckBox checkin, CheckBox checkout ) {
+        Hospede hospede = new Hospede(Long.parseLong(textCpf.getText()),Long.parseLong(textRg.getText()),textNome.getText(),Integer.parseInt(textIdade.getText()),textEndereco.getText());
+       hospedes.put(hospede.getCPF(),hospede);
+        JOptionPane.showMessageDialog(null,"Hospede salvo com sucesso!");
     }
 }
