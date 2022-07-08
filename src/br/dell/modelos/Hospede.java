@@ -52,6 +52,8 @@ Exiba, através do método showMessageDialog(), os dados do hóspede e o número
 Ao fim de todas as cinco etapas, você terá criado um programa que recebe como entrada as informações de um hóspede e
  o quarto em que ele ficará hospedado, exibindo essas informações para o usuário ao fim da execução.*/
 
+import java.time.LocalDate;
+
 /**
  * @author Iasmim Cardoso
  * @version 1
@@ -62,6 +64,9 @@ public class Hospede {
     private String nome;
     private int idade;
     private String endereco;
+    private String sexo;
+    private LocalDate checkin;
+    private LocalDate checkout;
 
     public Hospede() {
     }
@@ -109,6 +114,30 @@ public class Hospede {
 
     public String getEndereco() {
         return endereco;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public LocalDate getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(LocalDate checkin) {
+        this.checkin = checkin;
+    }
+
+    public LocalDate getCheckout() {
+        return checkout;
+    }
+
+    public void setCheckout(LocalDate checkout) {
+        this.checkout = checkout;
     }
 
     public String toString() {

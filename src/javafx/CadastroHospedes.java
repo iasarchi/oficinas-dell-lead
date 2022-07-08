@@ -1,4 +1,5 @@
 package javafx;
+
 import br.dell.modelos.Hospede;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -13,12 +14,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.Scanner;
 
 
 public class CadastroHospedes extends Application {
-   static HashMap hospedes = new HashMap<>();
+    static HashMap<Long, Hospede> hospedes = new HashMap<>();
+
     @Override
     public void start(Stage palco) throws Exception {
         VBox layoutRaiz = new VBox(10);
@@ -46,7 +48,7 @@ public class CadastroHospedes extends Application {
         layoutCpf.setBottom(textCpf);
 
         BorderPane layoutRg = new BorderPane();
-        Label labelRg = new Label("RG: ");
+        Label labelRg = new Label("RG:  ");
         TextField textRg = new TextField();
 
         layoutRg.setTop(labelRg);
@@ -115,29 +117,106 @@ public class CadastroHospedes extends Application {
 
         layoutRaiz.getChildren().addAll(layoutNome, layoutEndereco, layoutCpf, layoutRg, layoutIdade, layoutSexo, layoutQuartos, layoutCheckinBotoes, layoutBotoes);
 
-        EventHandler<ActionEvent> eventoSalva = new EventHandler<ActionEvent>(){
-            public void handle(ActionEvent evento){
-                salvar(textNome,textEndereco,textCpf,textRg,textIdade,buttonSexoFeminino,buttonSexoMasculino,checkin,checkout);
+        EventHandler<ActionEvent> eventoSalva = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent evento) {
+                salvar(textNome, textEndereco, textCpf, textRg, textIdade, buttonSexoFeminino, buttonSexoMasculino, checkin, checkout);
+            }
+        };
+
+        EventHandler<ActionEvent> eventoBuscar = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent evento) {
+                buscar(textNome, textEndereco, textCpf, textRg, textIdade, buttonSexoFeminino, buttonSexoMasculino, checkin, checkout);
+            }
+        };
+        EventHandler<ActionEvent> eventoRemover = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent evento) {
+                remover(textCpf);
             }
         };
         buttonSalvar.setOnAction(eventoSalva);
+        buttonBuscar.setOnAction(eventoBuscar);
+        buttonRemover.setOnAction(eventoRemover);
 
         Scene cena = new Scene(layoutRaiz, 350, 450);
         palco.setScene(cena);
 
         palco.show();
 
-
     }
-
 
     public static void main(String[] args) {
         launch();
     }
 
-    public static void salvar(TextField textNome,TextField textEndereco, TextField textCpf, TextField textRg, TextField textIdade, RadioButton buttonSexoFeminino, RadioButton buttonSexoMasculino, CheckBox checkin, CheckBox checkout ) {
-        Hospede hospede = new Hospede(Long.parseLong(textCpf.getText()),Long.parseLong(textRg.getText()),textNome.getText(),Integer.parseInt(textIdade.getText()),textEndereco.getText());
-       hospedes.put(hospede.getCPF(),hospede);
-        JOptionPane.showMessageDialog(null,"Hospede salvo com sucesso!");
+    public static void salvar(TextField textNome, TextField textEndereco, TextField textCpf, TextField textRg, TextField textIdade, RadioButton buttonSexoFeminino, RadioButton buttonSexoMasculino, CheckBox checkin, CheckBox checkout) {
+
+        Hospede hospede = new Hospede(Long.parseLong(textCpf.getText()), Long.parseLong(textRg.getText()), textNome.getText(), Integer.parseInt(textIdade.getText()), textEndereco.getText());
+
+        if (buttonSexoFeminino.isSelected()) {
+            hospede.setSexo("F");
+        } else if (buttonSexoMasculino.isSelected()) {
+            hospede.setSexo("M");
+        }
+
+        if (checkin.isSelected()) {
+            hospede.setCheckin(LocalDate.now());
+        } else if (checkout.isSelected()) {
+            hospede.setCheckout(LocalDate.now());
+        }
+
+        hospedes.put(hospede.getCPF(), hospede);
+        JOptionPane.showMessageDialog(null, "Hospede salvo com sucesso!");
+    }
+
+    public static void buscar(TextField textNome, TextField textEndereco, TextField textCpf, TextField textRg, TextField textIdade, RadioButton buttonSexoFeminino, RadioButton buttonSexoMasculino, CheckBox checkin, CheckBox checkout) {
+        Hospede hospede = hospedes.get(Long.parseLong(textCpf.getText()));
+
+        if (hospede == null) {
+            JOptionPane.showMessageDialog(null, "Nao existe o hospede indicado!");
+        } else {
+            textNome.setText(hospede.getNome());
+            textEndereco.setText(hospede.getEndereco());
+            textCpf.setText(String.valueOf(hospede.getCPF()));
+            textRg.setText(String.valueOf(hospede.getRG()));
+            textIdade.setText(String.valueOf(hospede.getIdade()));
+
+            if (hospede.getSexo().equals("F")) {
+                buttonSexoFeminino.setSelected(true);
+                buttonSexoMasculino.setSelected(false);
+            } else {
+                buttonSexoFeminino.setSelected(false);
+                buttonSexoMasculino.setSelected(true);
+            }
+
+            if (hospede.getCheckin() != null) {
+                checkin.setSelected(true);
+                checkout.setSelected(false);
+            } else if (hospede.getCheckin() != null && hospede.getCheckout() != null) {
+                checkin.setSelected(true);
+                checkout.setSelected(true);
+            } else if (hospede.getCheckout() != null) {
+                checkin.setSelected(false);
+                checkout.setSelected(true);
+            } else {
+                checkin.setSelected(false);
+                checkout.setSelected(false);
+            }
+        }
+    }
+
+    public static void remover(TextField cpf) {
+        Hospede hospede = hospedes.get(Long.parseLong(cpf.getText()));
+        if (hospede == null) {
+            JOptionPane.showMessageDialog(null, "Nao existe o hospede indicado!");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Deseja excluir o hospede " + hospede.getNome(), ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                hospedes.remove(Long.parseLong(cpf.getText()));
+                JOptionPane.showMessageDialog(null, "Hospede removido com sucesso!");
+            }
+        }
+
     }
 }
+

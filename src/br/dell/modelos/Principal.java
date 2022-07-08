@@ -1,5 +1,8 @@
 package br.dell.modelos;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -10,6 +13,8 @@ import java.util.Scanner;
  * @version 3
  */
 public class Principal {
+
+
 
     /**
      * Metodo com a funcao de gravar os valores dos hospedes e tratar as excecoes.
