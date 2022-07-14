@@ -1,14 +1,15 @@
 package Produto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public class RegistroDePagamento {
     private List<Produto>listaProduto;
-    private Date dataDaCompra;
+    private LocalDate dataDaCompra;
     private Cliente cliente;
 
-    public RegistroDePagamento(List<Produto> listaProduto, Date dataDaCompra, Cliente cliente) {
+    public RegistroDePagamento(List<Produto> listaProduto, LocalDate dataDaCompra, Cliente cliente) {
         this.listaProduto = listaProduto;
         this.dataDaCompra = dataDaCompra;
         this.cliente = cliente;
@@ -21,7 +22,7 @@ public class RegistroDePagamento {
         return listaProduto;
     }
 
-    public Date getDataDaCompra() {
+    public LocalDate getDataDaCompra() {
         return dataDaCompra;
     }
 
