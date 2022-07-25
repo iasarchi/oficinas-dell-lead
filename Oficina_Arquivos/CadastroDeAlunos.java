@@ -1,5 +1,3 @@
-package Oficina_Arquivos;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,10 +16,10 @@ public class CadastroDeAlunos {
 	private File arquivo;
 	private HashMap<String, Aluno> alunos;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		CadastroDeAlunos cadastro = new CadastroDeAlunos();
 		
-		cadastro.salvarNoLog(TipoDeLog.INICIAR, "Iniciando a aplica��o.");
+		cadastro.salvarNoLog(TipoDeLog.INICIAR, "Iniciando a aplicacao.");
 		
 		cadastro.iniciar();
 	}
@@ -55,7 +53,7 @@ public class CadastroDeAlunos {
 					break;
 
 				default:
-					System.out.println("Op��o inexistente.");
+					System.out.println("Opcao inexistente.");
 					opcao = -1;
 				}
 
@@ -64,8 +62,9 @@ public class CadastroDeAlunos {
 			finalizar();
 
 		} catch (IOException exception) {
-			System.err.println("Falha durante a manipula��o do arquivo.");
+			System.err.println("Falha durante a manipulacao do arquivo.");
 			System.err.println("Erro: " + exception.getMessage());
+			salvarNoLog(TipoDeLog.ERRO, "Erro durante a manipulacao do arquivo.");
 		} catch (ClassNotFoundException exception) {
 			System.err.println("Falha durante convers�o do registro em Aluno.");
 		}
@@ -77,6 +76,7 @@ public class CadastroDeAlunos {
 	private void finalizar() throws IOException {
 		System.out.println("Salvando dados no arquivo...");
 		gravarArquivo();
+		salvarNoLog(TipoDeLog.ENCERRAR, "Programa finalizado.");
 	}
 
 	private void exibeMenu() {
@@ -92,10 +92,10 @@ public class CadastroDeAlunos {
 	private void exibirAlunos() {
 		System.out.println("# Lista de Alunos\n");
 		for (Aluno aluno : alunos.values()) {
-			System.out.println("Matr�cula: " + aluno.getMatricula());
+			System.out.println("Matricula: " + aluno.getMatricula());
 			System.out.println("Nome: " + aluno.getNome());
 			if (aluno.getEndereco() != null && !aluno.getEndereco().isEmpty()) {
-				System.out.println("Endere�o: " + aluno.getEndereco());
+				System.out.println("Endereco: " + aluno.getEndereco());
 			}
 			if (aluno.getTelefone() != null && !aluno.getTelefone().isEmpty()) {
 				System.out.println("Telefone: " + aluno.getTelefone());
@@ -103,6 +103,7 @@ public class CadastroDeAlunos {
 			System.out.println();
 		}
 		System.out.println("-----------------------");
+		salvarNoLog(TipoDeLog.EXIBIR, "Alunos listados.");
 	}
 
 	private void novoAluno() {
@@ -122,6 +123,7 @@ public class CadastroDeAlunos {
 		}
 
 		alunos.put(aluno.getMatricula(), aluno);
+		salvarNoLog(TipoDeLog.INSERIR, "Novo aluno inserido.");
 	}
 
 	private void removerAluno() {
@@ -133,6 +135,7 @@ public class CadastroDeAlunos {
 		if (alunos.containsKey(matricula)) {
 			Aluno aluno = alunos.remove(matricula);
 			System.out.println("Aluno " + aluno.getNome() + " removido...");
+			salvarNoLog(TipoDeLog.EXCLUIR, "Aluno removido.");
 		} else {
 			System.out.println("Matr�cula n�o encontrada...");
 		}
@@ -179,8 +182,20 @@ public class CadastroDeAlunos {
 		String mensagemDeLog = "[" + agora.format(format) + "] [" + tipoDeLog + "] " + log + "\n";
 		
 		System.out.println(mensagemDeLog);
-		
-		// Implementar aqui as funcionalidades para salvar o Log em arquivo
+
+		File arquivo = new File("C:\\info\\log.txt");
+		try {
+
+			if (!arquivo.exists()){
+				arquivo.createNewFile();
+			}
+
+			FileWriter arquivoDeLog = new FileWriter("C:\\info\\log.txt",true);
+			arquivoDeLog.write(mensagemDeLog);
+		}catch (IOException exception){
+			System.err.println("Falha ao manipular o arquivo de log");
+		}
+
 	}
 
 }

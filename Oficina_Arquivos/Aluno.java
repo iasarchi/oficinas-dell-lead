@@ -1,4 +1,3 @@
-package Oficina_Arquivos;
 
 import java.io.Serializable;
 
